@@ -249,3 +249,139 @@ A comparative analysis showing average Engagement Levels across Job Titles, high
 | Support     | 2.8                |
 
 ---
+
+
+Here is the content for the **README.md** file:
+
+```markdown
+# Employee Satisfaction and Engagement Analysis
+
+This project analyzes employee data to derive insights on employee satisfaction, engagement, and behavior across different departments and job titles. The dataset includes information about employee satisfaction ratings, engagement levels, concerns, and suggestions.
+
+## Project Objectives:
+By the end of this project, the following key business questions will be answered:
+
+1. **Identify Departments with High Satisfaction and Engagement:**
+   Determine which departments have more than 50% of their employees with a Satisfaction Rating greater than 4 and an Engagement Level of 'High'.
+   
+2. **Who Feels Valued but Didn’t Suggest Improvements?**
+   Identify employees who feel valued but haven't provided suggestions for improvement.
+
+3. **Compare Engagement Levels Across Job Titles:**
+   Examine how Engagement Levels vary across different Job Titles and identify which Job Title has the highest average Engagement Level.
+
+---
+
+## Prerequisites:
+- Apache Spark should be installed and properly configured.
+- Python and PySpark libraries should be installed. You can install PySpark via pip:
+  ```bash
+  pip install pyspark
+  ```
+
+---
+
+## Task 1: Identify Departments with High Satisfaction and Engagement
+
+### Objective:
+Identify departments where more than 50% of employees have a Satisfaction Rating greater than 4 and an Engagement Level of 'High'.
+
+### Explanation:
+
+1. **Filter Employees**:
+   The first step is to filter the employees who have a **Satisfaction Rating** greater than 4 and an **Engagement Level** of 'High'. This is achieved by using the `filter()` function in PySpark, which allows us to specify the filtering conditions.
+
+2. **Count Total Employees by Department**:
+   After filtering, we calculate the total number of employees in each department using the `groupBy()` function along with `agg()` to perform the count aggregation.
+
+3. **Count Filtered Employees by Department**:
+   Similarly, we count how many employees in each department meet the filtered criteria (Satisfaction Rating > 4 and Engagement Level = 'High').
+
+4. **Calculate the Percentage**:
+   The percentage of employees who meet the criteria in each department is calculated by dividing the count of filtered employees by the total count of employees in the department and multiplying by 100.
+
+5. **Filter Departments Exceeding 50%**:
+   The final step filters the departments where the percentage of employees who meet the criteria exceeds 50%. These departments are then saved to a CSV file.
+
+6. **Output**:
+   The results are saved in a CSV file named `departments_with_high_satisfaction_engagement.csv` in the `output/` folder.
+
+---
+
+## Task 2: Who Feels Valued but Didn’t Suggest Improvements?
+
+### Objective:
+Identify employees who feel valued (Satisfaction Rating >= 4) but haven't provided suggestions for improvement. Additionally, calculate the proportion of such employees relative to the entire workforce.
+
+### Explanation:
+
+1. **Identify Valued Employees**:
+   Employees who feel valued are those with a **Satisfaction Rating** of 4 or higher. We filter the DataFrame to select these employees.
+
+2. **Filter Non-Contributors**:
+   Among the valued employees, we then filter to identify those who have not provided suggestions. This is done by checking the `ProvidedSuggestions` field, where `False` indicates no suggestions.
+
+3. **Calculate Proportion**:
+   The total number of employees who feel valued but did not suggest improvements is calculated. We then compute the proportion of these employees compared to the total workforce by dividing the count of non-contributors by the total count of employees.
+
+4. **Output**:
+   The results, including the count and proportion of employees who feel valued but did not suggest improvements, are saved in a CSV file named `valued_non_contributors.csv` in the `output/` folder.
+
+---
+
+## Task 3: Compare Engagement Levels Across Job Titles
+
+### Objective:
+Analyze how Engagement Levels vary across different Job Titles and identify which Job Title has the highest average Engagement Level.
+
+### Explanation:
+
+1. **Map Engagement Levels to Numerical Values**:
+   The **Engagement Level** column contains categorical values ('Low', 'Medium', 'High'). To perform numerical analysis, we map these values to numbers:
+   - 'Low' = 1
+   - 'Medium' = 2
+   - 'High' = 3
+
+   We use the `when()` function from the PySpark `functions` module to map these values.
+
+2. **Group by Job Title and Calculate Average Engagement**:
+   Once the engagement levels are mapped to numerical values, we group the data by **Job Title** and calculate the average Engagement Level for each job title using `groupBy()` and `agg()`.
+
+3. **Sort by Average Engagement**:
+   The results are sorted in descending order of average Engagement Level to identify the Job Title with the highest average engagement.
+
+4. **Output**:
+   The results, showing Job Titles and their corresponding average Engagement Levels, are saved in a CSV file named `avg_engagement_by_jobtitle.csv` in the `output/` folder.
+
+---
+
+## Output Files:
+- `departments_with_high_satisfaction_engagement.csv` – contains the department names and their percentage of employees with high satisfaction and engagement.
+- `valued_non_contributors.csv` – contains details of employees who feel valued but have not suggested improvements.
+- `avg_engagement_by_jobtitle.csv` – contains the job titles and their average engagement levels.
+
+---
+
+### **Execution Instructions:**
+
+To run the code for each task, you need to execute the corresponding Python scripts:
+
+1. **Task 1**:
+   ```bash
+   python task1.py
+   ```
+
+2. **Task 2**:
+   ```bash
+   python task2.py
+   ```
+
+3. **Task 3**:
+   ```bash
+   python task3.py
+   ```
+
+These commands will execute the analysis and save the results in the `output/` folder.
+
+---
+
