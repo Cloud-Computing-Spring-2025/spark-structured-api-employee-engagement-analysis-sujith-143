@@ -1,0 +1,2 @@
+Number of Employees Feeling Valued without Suggestions: 25
+Proportion: 25.0%
